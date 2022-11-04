@@ -2,17 +2,18 @@ import ECS.*;
 import ECS.Contracts.ComponentManager;
 import ECS.Contracts.EntityManager;
 import ECS.Contracts.SystemManager;
-import Graphics.Components.RenderComponent;
-import Graphics.Systems.RenderSystem;
-import World.Components.ScriptComponent;
-import World.Components.TransformComponent;
-import World.Systems.ScriptSystem;
-import World.Vec2;
+import Game.Graphics.Components.RenderComponent;
+import Game.Graphics.Systems.RenderSystem;
+import Game.World.Components.ScriptComponent;
+import Game.World.Components.TransformComponent;
+import Game.World.Systems.ScriptSystem;
+import Game.World.Vec2;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         EntityManager entityManager = new DefaultEntityManager();
         ComponentManager componentManager = new DefaultComponentManager();
         SystemManager systemManager = new DefaultSystemManager();
@@ -43,10 +44,15 @@ public class Main {
         entityManager.register(new DefaultEntity(entityManager, componentManager))
                 .addComponent(new TransformComponent(new Vec2(1, 5)))
                 .addComponent(new ScriptComponent())
-                .addComponent(new RenderComponent(RenderComponent.ANSI_RED, 'x'));
-
+                .addComponent(new RenderComponent(RenderComponent.RED_BACKGROUND, " P "));
+        /*
+        entityManager.register(new DefaultEntity(entityManager, componentManager))
+                .addComponent(new TransformComponent(new Vec2(38, 5)))
+                .addComponent(new RenderComponent(RenderComponent.GREEN_BACKGROUND, " F "));
+        */
         for(int i = 0; i < 100; i++) {
             systemManager.update(entityManager);
+            TimeUnit.SECONDS.sleep(1);
         }
     }
 
@@ -56,14 +62,14 @@ public class Main {
             for (int x = 0; x < 40; x++) {
                 boolean force = x == 0 || y == 0 || x == 39 || y == 9;
 
-                if (!force && x < 3) {
+                if (!force && (x < 3 || x > 36)) {
                     continue;
                 }
 
                 if (force || random.nextDouble() < 0.33) {
                     entityManager.register(new DefaultEntity(entityManager, componentManager))
                             .addComponent(new TransformComponent(new Vec2(x, y)))
-                            .addComponent(new RenderComponent(RenderComponent.ANSI_BLUE, 'x'));
+                            .addComponent(new RenderComponent(RenderComponent.BLUE_BACKGROUND, "   "));
                 }
             }
         }

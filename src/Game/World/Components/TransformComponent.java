@@ -1,7 +1,7 @@
-package World.Components;
+package Game.World.Components;
 
 import ECS.Contracts.Component;
-import World.Vec2;
+import Game.World.Vec2;
 
 public class TransformComponent implements Component {
     public Vec2 position;

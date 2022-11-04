@@ -1,6 +1,5 @@
 package ECS;
 
-import ECS.Contracts.ComponentManager;
 import ECS.Contracts.Entity;
 import ECS.Contracts.EntityManager;
 
@@ -29,7 +28,7 @@ public class DefaultEntityManager implements EntityManager {
     @Override
     public void initialize(Set<Signature> signatures) {
         for (Signature signature : signatures) {
-            this.signatureToEntitiesMap.put(signature, new LinkedList<>());
+            this.signatureToEntitiesMap.put(signature, new HashSet<>());
         }
     }
 

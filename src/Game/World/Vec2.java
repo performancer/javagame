@@ -1,4 +1,4 @@
-package World;
+package Game.World;
 
 public class Vec2 {
     private final int x;
@@ -17,12 +17,26 @@ public class Vec2 {
         return this.y;
     }
 
-    public boolean equals(Vec2 point) {
-        return this.x == point.x && this.y == point.y;
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Vec2 v)) {
+            return false;
+        }
+
+        return this.x == v.x && this.y == v.y;
     }
 
     @Override
     public String toString() {
         return "{" + this.x + ", " + this.y + "}";
+    }
+
+    @Override
+    public int hashCode() {
+        return this.x * 31 + y;
     }
 }
